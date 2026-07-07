@@ -12,7 +12,7 @@ product roadmap.
 
 ## 1. Tech stack & versions
 
-| Layer      | Technology                                   |
+| Layer      | Technology                                    |
 |------------|-----------------------------------------------|
 | Database   | MongoDB 6+ (local or MongoDB Atlas)           |
 | Backend    | Node.js 18+ / Express 4 / Mongoose 8          |
