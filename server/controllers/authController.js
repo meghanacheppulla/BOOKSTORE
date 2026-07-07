@@ -9,7 +9,7 @@ const signToken = (id) =>
   });
 
 // @route POST /api/auth/register
-// @access Public
+// @access All
 const register = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
