@@ -1,0 +1,79 @@
+const mongoose = require('mongoose');
+
+const bookSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'Title is required'],
+      trim: true,
+      maxlength: 200,
+    },
+    author: {
+      type: String,
+      required: [true, 'Author is required'],
+      trim: true,
+      maxlength: 120,
+    },
+    description: {
+      type: String,
+      required: [true, 'Description is required'],
+      maxlength: 3000,
+    },
+    genre: {
+      type: String,
+      required: [true, 'Genre is required'],
+      trim: true,
+    },
+    price: {
+      type: Number,
+      required: [true, 'Price is required'],
+      min: [0, 'Price cannot be negative'],
+    },
+    stock: {
+      type: Number,
+      required: true,
+      min: [0, 'Stock cannot be negative'],
+      default: 0,
+    },
+    isbn: {
+      type: String,
+      trim: true,
+      unique: true,
+      sparse: true, // allows multiple docs without isbn
+    },
+    coverImage: {
+      type: String,
+      default: 'https://via.placeholder.com/300x420?text=No+Cover',
+    },
+    publishedYear: {
+      type: Number,
+      min: 1450,
+      max: new Date().getFullYear(),
+    },
+    ratingAverage: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 5,
+      set: (v) => Math.round(v * 10) / 10, // round to 1 decimal
+    },
+    ratingCount: {
+      type: Number,
+      default: 0,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  },
+  { timestamps: true }
+);
+
+// Text index for search across title/author/description/genre
+bookSchema.index({ title: 'text', author: 'text', description: 'text', genre: 'text' });
+// Compound indexes for common filters/sorts
+bookSchema.index({ genre: 1 });
+bookSchema.index({ price: 1 });
+bookSchema.index({ ratingAverage: -1 });
+
+module.exports = mongoose.model('Book', bookSchema);
