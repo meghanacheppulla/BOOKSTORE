@@ -88,7 +88,7 @@ bookstore/
 
 ### Server (`server/.env` — copy from `server/.env.example`)
 
-| Variable            | Description                                                | Example                                      |
+| Variable             | Description                                               | Example                                    |
 |----------------------|-----------------------------------------------------------|--------------------------------------------|
 | `NODE_ENV`           | `development` / `production` / `test`                     | `development`                              |
 | `PORT`               | API port                                                   | `5000`                                     |
