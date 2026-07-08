@@ -4,8 +4,6 @@ const Order = require('../models/Order');
 const Book = require('../models/Book');
 const { success, error } = require('../utils/apiResponse');
 
-// @route POST /api/orders
-// @access Private
 const createOrder = asyncHandler(async (req, res) => {
   const { items, shippingAddress, paymentMethod } = req.body;
 
@@ -13,7 +11,6 @@ const createOrder = asyncHandler(async (req, res) => {
     return error(res, 400, 'Order must include at least one item');
   }
 
-  // Re-fetch books server-side so price/stock cannot be spoofed by the client.
   const bookIds = items.map((i) => i.book);
   const books = await Book.find({ _id: { $in: bookIds } }).lean();
 
@@ -35,7 +32,7 @@ const createOrder = asyncHandler(async (req, res) => {
     itemsPrice += book.price * item.quantity;
   }
 
-  const shippingPrice = itemsPrice > 500 ? 0 : 40; // simple flat-rate simulation
+  const shippingPrice = itemsPrice > 500 ? 0 : 40;
   const totalPrice = itemsPrice + shippingPrice;
 
   const order = await Order.create({
@@ -46,11 +43,10 @@ const createOrder = asyncHandler(async (req, res) => {
     itemsPrice,
     shippingPrice,
     totalPrice,
-    isPaid: true, // simulated checkout: treated as paid immediately
+    isPaid: true,
     paidAt: new Date(),
   });
 
-  // Decrement stock (simulated, non-transactional for simplicity in MVP)
   await Promise.all(
     orderItems.map((oi) => Book.findByIdAndUpdate(oi.book, { $inc: { stock: -oi.quantity } }))
   );
@@ -58,15 +54,11 @@ const createOrder = asyncHandler(async (req, res) => {
   success(res, 201, { order }, 'Order placed successfully');
 });
 
-// @route GET /api/orders/my
-// @access Private
 const getMyOrders = asyncHandler(async (req, res) => {
   const orders = await Order.find({ user: req.user._id }).sort('-createdAt').lean();
   success(res, 200, { orders });
 });
 
-// @route GET /api/orders/:id
-// @access Private (owner) or Admin
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate('user', 'name email').lean();
   if (!order) return error(res, 404, 'Order not found');
@@ -78,8 +70,6 @@ const getOrderById = asyncHandler(async (req, res) => {
   success(res, 200, { order });
 });
 
-// @route GET /api/orders
-// @access Private/Admin
 const getAllOrders = asyncHandler(async (req, res) => {
   const { status, page = 1, limit = 20 } = req.query;
   const filter = {};
@@ -101,8 +91,6 @@ const getAllOrders = asyncHandler(async (req, res) => {
   success(res, 200, { orders, pagination: { total, page: pageNum, pages: Math.ceil(total / limitNum) || 1 } });
 });
 
-// @route PUT /api/orders/:id/status
-// @access Private/Admin
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
   const order = await Order.findById(req.params.id);

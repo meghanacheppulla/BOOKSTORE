@@ -7,7 +7,7 @@ export default function Register() {
   const { register } = useAuth();
   const { addToast } = useToast();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'user' });
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -16,7 +16,7 @@ export default function Register() {
     setSubmitting(true);
     setError('');
     try {
-      await register(form.name, form.email, form.password);
+      await register(form.name, form.email, form.password, form.role);
       addToast('Account created successfully! Welcome to BookStore.', 'success');
       navigate('/');
     } catch (err) {
@@ -55,6 +55,15 @@ export default function Register() {
           onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
           required
         />
+        <label htmlFor="role">Role</label>
+        <select
+          id="role"
+          value={form.role}
+          onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
         {error && <p className="form-error">{error}</p>}
         <button className="btn" type="submit" disabled={submitting}>
           {submitting ? 'Creating account…' : 'Register'}

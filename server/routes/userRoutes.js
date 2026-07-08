@@ -7,7 +7,6 @@ const router = express.Router();
 router.get('/profile', protect, getProfile);
 router.put('/profile', protect, updateProfile);
 
-// Admin
 router.get('/', protect, authorize('admin'), getAllUsers);
 
 module.exports = router;

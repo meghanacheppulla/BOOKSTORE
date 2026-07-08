@@ -27,7 +27,6 @@ router.post(
 router.get('/my', protect, getMyOrders);
 router.get('/:id', protect, getOrderById);
 
-// Admin
 router.get('/', protect, authorize('admin'), getAllOrders);
 router.put(
   '/:id/status',

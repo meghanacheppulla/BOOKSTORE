@@ -22,7 +22,7 @@ export default function Search() {
 
   const [debouncedKeyword, setDebouncedKeyword] = useState(filters.keyword);
 
-  // Debounce effect for keyword
+
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedKeyword(filters.keyword);
@@ -51,7 +51,7 @@ export default function Search() {
         setPagination(data.data.pagination);
       })
       .finally(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, [filters.genre, filters.minPrice, filters.maxPrice, filters.minRating, filters.sort, filters.page, debouncedKeyword]);
 
   useEffect(() => {

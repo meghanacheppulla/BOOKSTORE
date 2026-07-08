@@ -15,7 +15,6 @@ const userRoutes = require('./routes/userRoutes');
 
 const app = express();
 
-// --- Security, compression & parsing middleware ---
 app.use(helmet());
 app.use(compression());
 app.use(express.json({ limit: '10kb' }));
@@ -32,19 +31,16 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// --- Health check ---
 app.get('/api/health', (req, res) => {
   res.status(200).json({ success: true, message: 'BookStore API is running', data: { uptime: process.uptime() } });
 });
 
-// --- Routes ---
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/users', userRoutes);
 
-// --- Error handling (must be last) ---
 app.use(notFound);
 app.use(errorHandler);
 
@@ -57,7 +53,6 @@ const start = async () => {
   });
 };
 
-// Only auto-start when run directly (keeps the app importable for tests)
 if (require.main === module) {
   start();
 }
