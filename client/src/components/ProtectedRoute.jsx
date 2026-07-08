@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-// Guards a route: requires login, optionally a specific role (e.g. "admin").
+
 export default function ProtectedRoute({ children, requireRole }) {
   const { isAuthenticated, user, loading } = useAuth();
   const location = useLocation();

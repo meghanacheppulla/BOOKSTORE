@@ -7,7 +7,7 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-// Attach JWT to every request if present
+
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('bookstore_token');
   if (token) {
@@ -16,7 +16,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Normalize error messages from the API's { success, message, errors } envelope
+
 api.interceptors.response.use(
   (res) => res,
   (err) => {

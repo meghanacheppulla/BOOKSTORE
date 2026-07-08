@@ -3,8 +3,8 @@ const mongoose = require('mongoose');
 const orderItemSchema = new mongoose.Schema(
   {
     book: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
-    title: { type: String, required: true }, // snapshot at time of order
-    price: { type: Number, required: true }, // snapshot at time of order
+    title: { type: String, required: true },
+    price: { type: Number, required: true },
     quantity: { type: Number, required: true, min: 1 },
   },
   { _id: false }

@@ -16,7 +16,7 @@ export default function BookCard({ book, index = 0 }) {
   return (
     <article className="book-card" style={{ animationDelay: `${index * 0.05}s` }}>
       <Link to={`/books/${book._id}`} className="book-card-image-link">
-        <img src={book.coverImage} alt={`Cover of ${book.title}`} loading="lazy" />
+        <img src={book.imageUrl} alt={`Cover of ${book.title}`} loading="lazy" onError={(e) => { e.target.src = 'https://placehold.co/300x420/14110e/f3eae1?text=No+Cover' }} />
       </Link>
       <div className="book-card-body">
         <Link to={`/books/${book._id}`} className="book-card-title">

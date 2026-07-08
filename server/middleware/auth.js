@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
 const { error } = require('../utils/apiResponse');
 
-// Verifies JWT and attaches req.user
+
 const protect = asyncHandler(async (req, res, next) => {
   let token;
   const authHeader = req.headers.authorization;
@@ -29,7 +29,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-// Restrict route to specific roles, e.g. authorize('admin')
+
 const authorize = (...roles) => (req, res, next) => {
   if (!req.user || !roles.includes(req.user.role)) {
     return error(res, 403, `Access denied: requires role(s): ${roles.join(', ')}`);

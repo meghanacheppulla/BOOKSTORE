@@ -45,7 +45,7 @@ export default function BookDetails() {
       <button className="link-button" onClick={() => navigate(-1)}>&larr; Back</button>
 
       <div className="book-details-grid">
-        <img src={book.coverImage} alt={`Cover of ${book.title}`} className="book-details-cover" />
+        <img src={book.imageUrl} alt={`Cover of ${book.title}`} className="book-details-cover" onError={(e) => { e.target.src = 'https://placehold.co/300x420/14110e/f3eae1?text=No+Cover' }} />
         <div>
           <h1>{book.title}</h1>
           <p className="book-details-author">by {book.author}</p>

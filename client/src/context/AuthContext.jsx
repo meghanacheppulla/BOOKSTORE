@@ -19,7 +19,6 @@ export function AuthProvider({ children }) {
       setLoading(false);
       return;
     }
-    // Validate token / refresh user on load
     api
       .get('/auth/me')
       .then(({ data }) => {
@@ -43,8 +42,8 @@ export function AuthProvider({ children }) {
     return loggedInUser;
   }, []);
 
-  const register = useCallback(async (name, email, password) => {
-    const { data } = await api.post('/auth/register', { name, email, password });
+  const register = useCallback(async (name, email, password, role) => {
+    const { data } = await api.post('/auth/register', { name, email, password, role });
     const { user: newUser, token } = data.data;
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(USER_KEY, JSON.stringify(newUser));
