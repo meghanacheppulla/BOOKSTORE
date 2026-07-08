@@ -39,11 +39,11 @@ const bookSchema = new mongoose.Schema(
       type: String,
       trim: true,
       unique: true,
-      sparse: true, // allows multiple docs without isbn
+      sparse: true,
     },
-    coverImage: {
+    imageUrl: {
       type: String,
-      default: 'https://via.placeholder.com/300x420?text=No+Cover',
+      required: [true, 'Image URL is required'],
     },
     publishedYear: {
       type: Number,
@@ -55,7 +55,7 @@ const bookSchema = new mongoose.Schema(
       default: 0,
       min: 0,
       max: 5,
-      set: (v) => Math.round(v * 10) / 10, // round to 1 decimal
+      set: (v) => Math.round(v * 10) / 10,
     },
     ratingCount: {
       type: Number,
@@ -69,9 +69,7 @@ const bookSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Text index for search across title/author/description/genre
 bookSchema.index({ title: 'text', author: 'text', description: 'text', genre: 'text' });
-// Compound indexes for common filters/sorts
 bookSchema.index({ genre: 1 });
 bookSchema.index({ price: 1 });
 bookSchema.index({ ratingAverage: -1 });

@@ -6,6 +6,7 @@ const {
   getBooks,
   getBookById,
   createBook,
+  bulkAddBooks,
   updateBook,
   deleteBook,
   getGenres,
@@ -23,12 +24,10 @@ const bookValidation = [
   body('stock').optional().isInt({ min: 0 }).withMessage('Stock must be a non-negative integer'),
 ];
 
-// Public
 router.get('/', getBooks);
 router.get('/genres/list', getGenres);
 router.get('/:id', getBookById);
 
-// Nested reviews
 router.get('/:bookId/reviews', getReviewsForBook);
 router.post(
   '/:bookId/reviews',
@@ -41,8 +40,8 @@ router.post(
   createReview
 );
 
-// Admin only
 router.post('/', protect, authorize('admin'), bookValidation, validate, createBook);
+router.post('/bulk', protect, authorize('admin'), bulkAddBooks);
 router.put('/:id', protect, authorize('admin'), updateBook);
 router.delete('/:id', protect, authorize('admin'), deleteBook);
 

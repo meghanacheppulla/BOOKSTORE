@@ -27,11 +27,9 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// A user can only review a given book once
 reviewSchema.index({ book: 1, user: 1 }, { unique: true });
 reviewSchema.index({ book: 1, createdAt: -1 });
 
-// Recalculate the parent book's average rating whenever reviews change.
 reviewSchema.statics.recalculateBookRating = async function recalculateBookRating(bookId) {
   const Book = mongoose.model('Book');
   const stats = await this.aggregate([

@@ -1,6 +1,6 @@
 import BookCard from './BookCard';
 
-export default function BookList({ books, loading, emptyMessage = 'No books found.' }) {
+export default function BookList({ books, loading, emptyMessage = 'No books available yet' }) {
   if (loading) {
     return (
       <div className="grid">

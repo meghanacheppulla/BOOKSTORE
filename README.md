@@ -12,7 +12,7 @@ product roadmap.
 
 ## 1. Tech stack & versions
 
-| Layer      | Technology                                   |
+| Layer      | Technology                                    |
 |------------|-----------------------------------------------|
 | Database   | MongoDB 6+ (local or MongoDB Atlas)           |
 | Backend    | Node.js 18+ / Express 4 / Mongoose 8          |
@@ -88,13 +88,13 @@ bookstore/
 
 ### Server (`server/.env` — copy from `server/.env.example`)
 
-| Variable            | Description                                              | Example                                   |
+| Variable             | Description                                               | Example                                    |
 |----------------------|-----------------------------------------------------------|--------------------------------------------|
 | `NODE_ENV`           | `development` / `production` / `test`                     | `development`                              |
 | `PORT`               | API port                                                   | `5000`                                     |
 | `MONGO_URI`          | MongoDB connection string                                  | `mongodb://127.0.0.1:27017/bookstore`      |
 | `JWT_SECRET`         | Secret used to sign JWTs — **use a long random string**    | `openssl rand -hex 32`                     |
-| `JWT_EXPIRES_IN`     | Token lifetime                                              | `7d`                                        |
+| `JWT_EXPIRES_IN`     | Token lifetime                                              | `7d`                                      |
 | `CLIENT_ORIGIN`      | Allowed CORS origin(s), comma-separated                     | `http://localhost:5173`                    |
 | `SEED_ADMIN_EMAIL`   | Admin account created by the seed script                    | `admin@bookstore.com`                      |
 | `SEED_ADMIN_PASSWORD`| Admin password created by the seed script                   | `Admin@12345`                              |

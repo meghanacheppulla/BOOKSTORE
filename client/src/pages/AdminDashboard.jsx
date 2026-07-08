@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import api from '../api/axios';
 import AdminBookForm from '../components/AdminBookForm';
+import BulkUploadCSV from '../components/BulkUploadCSV';
 
 const ORDER_STATUSES = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
@@ -73,15 +74,18 @@ export default function AdminDashboard() {
         <section>
           <div className="section-header">
             <h2>Manage books</h2>
-            <button
-              className="btn btn-sm"
-              onClick={() => {
-                setEditingBook(null);
-                setShowForm((s) => !s);
-              }}
-            >
-              {showForm && !editingBook ? 'Close form' : 'Add new book'}
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <button
+                className="btn btn-sm"
+                onClick={() => {
+                  setEditingBook(null);
+                  setShowForm((s) => !s);
+                }}
+              >
+                {showForm && !editingBook ? 'Close form' : 'Add new book'}
+              </button>
+              <BulkUploadCSV onUploadSuccess={loadBooks} />
+            </div>
           </div>
 
           {error && <p className="form-error">{error}</p>}
@@ -134,6 +138,11 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ))}
+              {books.length === 0 && (
+                <tr>
+                  <td colSpan="6" style={{ textAlign: 'center', padding: '2rem' }}>No books available yet</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </section>
@@ -166,6 +175,11 @@ export default function AdminDashboard() {
                   </td>
                 </tr>
               ))}
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan="4" style={{ textAlign: 'center', padding: '2rem' }}>No orders available yet</td>
+                </tr>
+              )}
             </tbody>
           </table>
         </section>

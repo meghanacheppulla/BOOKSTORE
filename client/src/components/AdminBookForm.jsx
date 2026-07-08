@@ -8,7 +8,7 @@ const emptyForm = {
   price: '',
   stock: '',
   isbn: '',
-  coverImage: '',
+  imageUrl: '',
   publishedYear: '',
 };
 
@@ -25,7 +25,7 @@ export default function AdminBookForm({ initialBook, onSubmit, onCancel, submitt
         price: initialBook.price ?? '',
         stock: initialBook.stock ?? '',
         isbn: initialBook.isbn || '',
-        coverImage: initialBook.coverImage || '',
+        imageUrl: initialBook.imageUrl || '',
         publishedYear: initialBook.publishedYear ?? '',
       });
     } else {
@@ -105,8 +105,8 @@ export default function AdminBookForm({ initialBook, onSubmit, onCancel, submitt
           <input id="isbn" name="isbn" value={form.isbn} onChange={handleChange} />
         </div>
         <div className="form-row">
-          <label htmlFor="coverImage">Cover image URL</label>
-          <input id="coverImage" name="coverImage" value={form.coverImage} onChange={handleChange} />
+          <label htmlFor="imageUrl">Image URL *</label>
+          <input id="imageUrl" name="imageUrl" value={form.imageUrl} onChange={handleChange} required />
         </div>
       </div>
       <div className="form-actions">

@@ -3,8 +3,6 @@ const Review = require('../models/Review');
 const Book = require('../models/Book');
 const { success, error } = require('../utils/apiResponse');
 
-// @route GET /api/books/:bookId/reviews
-// @access Public
 const getReviewsForBook = asyncHandler(async (req, res) => {
   const reviews = await Review.find({ book: req.params.bookId })
     .populate('user', 'name')
@@ -13,8 +11,6 @@ const getReviewsForBook = asyncHandler(async (req, res) => {
   success(res, 200, { reviews });
 });
 
-// @route POST /api/books/:bookId/reviews
-// @access Private
 const createReview = asyncHandler(async (req, res) => {
   const { bookId } = req.params;
   const { rating, comment } = req.body;
@@ -37,8 +33,6 @@ const createReview = asyncHandler(async (req, res) => {
   success(res, 201, { review }, 'Review submitted');
 });
 
-// @route DELETE /api/reviews/:id
-// @access Private (owner) or Admin
 const deleteReview = asyncHandler(async (req, res) => {
   const review = await Review.findById(req.params.id).lean();
   if (!review) return error(res, 404, 'Review not found');
@@ -48,7 +42,7 @@ const deleteReview = asyncHandler(async (req, res) => {
     return error(res, 403, 'Not authorized to delete this review');
   }
 
-  await Review.findOneAndDelete({ _id: review._id }); // triggers post hook to recalc rating
+  await Review.findOneAndDelete({ _id: review._id });
   success(res, 200, null, 'Review deleted');
 });
 
